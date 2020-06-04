@@ -255,4 +255,4 @@ app.patch('/tasks/:id', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-app.get('/', (req, res) => res.redirect('/api-docs'));
+app.get('/', (req, res) => res.redirect('/tasks'));
