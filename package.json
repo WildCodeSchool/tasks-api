@@ -10,13 +10,12 @@
   "author": "",
   "license": "GPL3",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
-    "uniqid": "^5.2.0",
-    "swagger-jsdoc": "^4.0.0",
-    "swagger-ui-express": "^4.1.4"
+    "uniqid": "^5.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
