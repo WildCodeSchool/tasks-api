@@ -256,3 +256,7 @@ app.patch('/tasks/:id', (req, res) => {
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 app.get('/', (req, res) => res.redirect('/tasks'));
+// reset state every 5 minutes
+setInterval(() => {
+  tasks = initialTasks;
+}, 1000 * 60 * 5);
