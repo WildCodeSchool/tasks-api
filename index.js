@@ -156,7 +156,7 @@ app.post('/tasks', (req, res) => {
     const newTask = { id: uniqid(), name: name.toLowerCase(), done, createdAt: moment().format() };
     tasks.push(newTask);
     // to avdoid too much memory use since the API is public
-    if (tasks.length > 50) {
+    if (tasks.length > 5) {
       tasks.unshift();
     }
     res.status(201);
@@ -259,4 +259,4 @@ app.get('/', (req, res) => res.redirect('/tasks'));
 // reset state every 5 minutes
 setInterval(() => {
   tasks = initialTasks;
-}, 1000 * 60 * 5);
+}, 1000 * 60);
