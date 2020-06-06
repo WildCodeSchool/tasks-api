@@ -77,7 +77,8 @@ app.use(router);
 router.post('/:API_KEY/tasks', (req, res) => {
   setTimeout(() => {
     const {tasks} = req
-    const { name, done } = req.body;
+    let { name, done } = req.body;
+    name = _.trim(name.toLowerCase())
 
     const {error: validationErrors} = taskSchema.validate({name, done}, { abortEarly: false, presence: 'required' });
     if (validationErrors) {
@@ -85,13 +86,13 @@ router.post('/:API_KEY/tasks', (req, res) => {
       return res.json({ errorMessage: 'provided attributes aren\'t valid', validationErrors });
     }
 
-    const existingTask = _.find(tasks, { name: name.toLowerCase() });
+    const existingTask = _.find(tasks, { name });
     if (existingTask) {
       res.status(400);
       return res.json({ errorMessage: `A task named "${name.toLowerCase()}" already exists on the server` });
     }
 
-    const newTask = { id: uniqid(), name: name.toLowerCase(), done: !!done, createdAt: moment().format() };
+    const newTask = { id: uniqid(), name, done: !!done, createdAt: moment().format() };
     tasks.push(newTask);
     // to avoid too much memory use since the API is public
     if (tasks.length > MAX_TASK_PER_SESSION) {
@@ -118,7 +119,8 @@ const mergeWhenDefined = (propsToMergeIn, target) => {
 router.patch('/:API_KEY/tasks/:id', (req, res) => {
   setTimeout(() => {
     const {tasks} = req
-    const { done, name } = req.body;
+    let { done, name } = req.body;
+    name = _.trim(name.toLowerCase())
     const { id } = req.params;
 
     const {error: validationErrors} = taskSchema.validate({name, done}, { abortEarly: false });
