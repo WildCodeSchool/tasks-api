@@ -29,7 +29,7 @@ const initialTasks = [
 ];
 
 const taskSchema = Joi.object().keys({
-  name: Joi.string().alphanum().min(1).max(30),
+  name: Joi.string().min(1).max(30),
   done: Joi.bool().optional(),
 });
 
@@ -154,3 +154,15 @@ router.delete('/:API_KEY/tasks/:id', (req, res) => {
 app.get('/', (req, res) => res.redirect('/API_KEY'));
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
+
+function logger({ getState, dispatch }) {
+  return next => action => {
+    dispatch
+    console.log('will dispatch', action);
+    // Call the next dispatch method in the middleware chain.
+    const returnValue = next(action);
+    console.log('state after dispatch : ', getState())
+    return returnValue;
+  }
+}
